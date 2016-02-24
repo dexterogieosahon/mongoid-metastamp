@@ -1,0 +1,16 @@
+# Tell Mongoid which environment this configuration is for.
+test:
+  # Configure available database sessions. (required)
+  sessions:
+    # Defines the default session. (required)
+    default:
+      # Defines the name of the default database that Mongoid can connect to.
+      # (required).
+      database: mongoid_metastamp_test
+      # Provides the hosts the default session can connect to. Must be an array
+      # of host:port pairs. (required)
+      hosts:
+        - localhost:27017
+  options:
+    use_activesupport_time_zone: true
+    use_utc: false
