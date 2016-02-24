@@ -19,7 +19,11 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency("mongoid", "~> 2.4")
+  s.add_dependency("mongoid", ">= 3.0.0", '<= 4.1')
   s.add_development_dependency("rake", "~> 0.9")
   s.add_development_dependency("rspec", "~> 2.6")
+  s.add_development_dependency("database_cleaner", "~> 1.4.0")
+  s.add_development_dependency("pry", "~> 0.10.0")
+  s.add_development_dependency 'simplecov', ">= 0.10.0"
+  s.add_development_dependency 'codeclimate-test-reporter', '0.4.7'
 end

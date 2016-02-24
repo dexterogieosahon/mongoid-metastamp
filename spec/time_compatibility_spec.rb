@@ -30,7 +30,7 @@ describe "Mongoid::Metastamp::Time" do
       end
 
       it "should contain the same timestamp" do
-        instance.timestamp.should == now.to_s
+        format_time(instance.timestamp).should == format_time(now)
       end
 
     end
@@ -47,7 +47,7 @@ describe "Mongoid::Metastamp::Time" do
       end
 
       it "should still be able to read legacy timestamps" do
-        legacy.timestamp.should == now.to_s
+        format_time(legacy.timestamp).should == format_time(now)
       end
       
       describe "updating timestamp with the same time" do
@@ -61,12 +61,12 @@ describe "Mongoid::Metastamp::Time" do
         end
 
         it "should still be compatible with the legacy timestamp" do
-          legacy.timestamp.should == now.to_s
+          format_time(legacy.timestamp).should == format_time(now)
         end
 
         it "should still store timestamp as a Time" do
           legacy['timestamp']['time'].class.should == Time
-          legacy['timestamp']['time'].should == now.to_s
+          legacy['timestamp']['time'] == now.to_time
         end
 
         it "should still return timestamp as an ActiveSupport::TimeWithZone" do
@@ -75,6 +75,15 @@ describe "Mongoid::Metastamp::Time" do
 
       end
 
+    end
+
+    # Below mehotd avoids that time-with-zone comparison fails due of hidden
+    # millisecond differences
+    # @param time [TimeWithZone]
+    # @return [String], formatted time with zone
+    def format_time(time)
+      strftime_preset = '%Y-%m-%dT%l:%M:%S%z'
+      time.strftime(strftime_preset)
     end
 
   end
